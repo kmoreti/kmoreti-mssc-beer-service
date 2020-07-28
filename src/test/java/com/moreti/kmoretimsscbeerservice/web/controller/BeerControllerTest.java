@@ -9,6 +9,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -57,7 +58,7 @@ class  BeerControllerTest {
                 .beerName("Galaxy Cat")
                 .beerStyle(BeerStyleEnum.PALE_ALE)
                 .upc(123L)
-//                .price(new BigDecimal("3.90"))
+                .price(new BigDecimal("3.90"))
                 .build();
     }
 }
