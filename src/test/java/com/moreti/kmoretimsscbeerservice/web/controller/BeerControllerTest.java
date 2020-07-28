@@ -16,7 +16,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(BeerController.class)
-class BeerControllerTest {
+class  BeerControllerTest {
 
     private static final String BEER_API_URL_V1 = "/api/v1/beer";
     @Autowired
