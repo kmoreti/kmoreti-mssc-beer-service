@@ -1,6 +1,8 @@
 package com.moreti.kmoretimsscbeerservice.web.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.moreti.kmoretimsscbeerservice.bootstrap.BeerLoader;
+import com.moreti.kmoretimsscbeerservice.services.BeerService;
 import com.moreti.kmoretimsscbeerservice.web.model.BeerDto;
 import com.moreti.kmoretimsscbeerservice.web.model.BeerStyleEnum;
 import org.junit.jupiter.api.Test;
@@ -8,6 +10,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.RestDocumentationExtension;
 import org.springframework.restdocs.constraints.ConstraintDescriptions;
@@ -18,6 +21,8 @@ import org.springframework.util.StringUtils;
 import java.math.BigDecimal;
 import java.util.UUID;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
@@ -37,9 +42,14 @@ class  BeerControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
 
+    @MockBean
+    BeerService beerService;
 
     @Test
     void getBeerById() throws Exception {
+
+        given(beerService.getById(any())).willReturn(getValidBeerDto());
+
         mockMvc.perform(get(BEER_API_URL_V1 + "/{beerId}", UUID.randomUUID())
                 .param("iscold", "yes")
                 .accept(MediaType.APPLICATION_JSON))
@@ -71,6 +81,8 @@ class  BeerControllerTest {
         String beerDtoJson = objectMapper.writeValueAsString(getValidBeerDto());
 
         ConstrainedFields fields = new ConstrainedFields(BeerDto.class);
+
+        given(beerService.saveNewBeer(any())).willReturn(getValidBeerDto());
 
         mockMvc.perform(post(BEER_API_URL_V1)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -106,7 +118,7 @@ class  BeerControllerTest {
         return BeerDto.builder()
                 .beerName("Galaxy Cat")
                 .beerStyle(BeerStyleEnum.PALE_ALE)
-                .upc(123L)
+                .upc(BeerLoader.BEER_1_UPC)
                 .price(new BigDecimal("3.90"))
                 .build();
     }
