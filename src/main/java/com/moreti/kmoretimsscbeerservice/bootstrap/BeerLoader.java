@@ -3,11 +3,10 @@ package com.moreti.kmoretimsscbeerservice.bootstrap;
 import com.moreti.kmoretimsscbeerservice.domain.Beer;
 import com.moreti.kmoretimsscbeerservice.repositories.BeerRepository;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 
-@Component
+//@Component
 public class BeerLoader implements CommandLineRunner {
 
     public static final String BEER_1_UPC = "0631234200036";

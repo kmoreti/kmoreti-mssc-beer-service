@@ -21,7 +21,7 @@ import org.springframework.util.StringUtils;
 import java.math.BigDecimal;
 import java.util.UUID;
 
-import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
@@ -36,6 +36,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class  BeerControllerTest {
 
     private static final String BEER_API_URL_V1 = "/api/v1/beer";
+    private static final String BEER_API_URL_V1_UPC = "/api/v1/beerUpc";
     @Autowired
     private MockMvc mockMvc;
 
@@ -48,7 +49,7 @@ class  BeerControllerTest {
     @Test
     void getBeerById() throws Exception {
 
-        given(beerService.getById(any())).willReturn(getValidBeerDto());
+        given(beerService.getById(any(),anyBoolean())).willReturn(getValidBeerDto());
 
         mockMvc.perform(get(BEER_API_URL_V1 + "/{beerId}", UUID.randomUUID())
                 .param("iscold", "yes")
@@ -136,5 +137,32 @@ class  BeerControllerTest {
                     .collectionToDelimitedString(this.constraintDescriptions
                             .descriptionsForProperty(path), ". ")));
         }
+    }
+
+    @Test
+    void getBeerByUPC() throws Exception {
+
+        given(beerService.getByUpc(anyString(),anyBoolean())).willReturn(getValidBeerDto());
+
+        mockMvc.perform(get(BEER_API_URL_V1_UPC + "/{upc}", "123456")
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                // Documentation
+                .andDo(document("v1/beer-get",
+                        pathParameters(
+                                parameterWithName("upc").description("UPC of desired beer to get.")
+                        ),
+                        responseFields(
+                                fieldWithPath("id").description("Id of Beer"),
+                                fieldWithPath("version").description("Version number"),
+                                fieldWithPath("createDate").description("Date created"),
+                                fieldWithPath("lastModifiedDate").description("Date updated"),
+                                fieldWithPath("beerName").description("Beer name"),
+                                fieldWithPath("beerStyle").description("Beer style"),
+                                fieldWithPath("upc").description("UPC of beer"),
+                                fieldWithPath("price").description("Price"),
+                                fieldWithPath("quantityOnHand").description("Quantity on hand")
+                        )
+                ));
     }
 }
