@@ -1,9 +1,9 @@
 package com.moreti.kmoretimsscbeerservice.web.controller;
 
 import com.moreti.kmoretimsscbeerservice.services.BeerService;
-import com.moreti.kmoretimsscbeerservice.web.model.BeerDto;
-import com.moreti.kmoretimsscbeerservice.web.model.BeerPagedList;
-import com.moreti.kmoretimsscbeerservice.web.model.BeerStyleEnum;
+import guru.sfg.brewery.model.BeerDto;
+import guru.sfg.brewery.model.BeerPagedList;
+import guru.sfg.brewery.model.BeerStyleEnum;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpHeaders;

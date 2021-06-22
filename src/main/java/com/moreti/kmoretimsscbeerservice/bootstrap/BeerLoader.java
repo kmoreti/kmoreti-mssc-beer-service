@@ -2,7 +2,7 @@ package com.moreti.kmoretimsscbeerservice.bootstrap;
 
 import com.moreti.kmoretimsscbeerservice.domain.Beer;
 import com.moreti.kmoretimsscbeerservice.repositories.BeerRepository;
-import com.moreti.kmoretimsscbeerservice.web.model.BeerStyleEnum;
+import guru.sfg.brewery.model.BeerStyleEnum;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 

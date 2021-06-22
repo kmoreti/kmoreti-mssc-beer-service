@@ -1,8 +1,8 @@
 package com.moreti.kmoretimsscbeerservice.services;
 
-import com.moreti.kmoretimsscbeerservice.web.model.BeerDto;
-import com.moreti.kmoretimsscbeerservice.web.model.BeerPagedList;
-import com.moreti.kmoretimsscbeerservice.web.model.BeerStyleEnum;
+import guru.sfg.brewery.model.BeerDto;
+import guru.sfg.brewery.model.BeerPagedList;
+import guru.sfg.brewery.model.BeerStyleEnum;
 import org.springframework.data.domain.PageRequest;
 
 import java.util.UUID;
